@@ -1,5 +1,6 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import logoImg from '../assets/images/logo.svg';
+import googleIconImg from '../assets/images/google-icon.svg';
 import { Button } from '../components/Button';
 import { RoomCode } from '../components/RoomCode';
 import { Question } from '../components/Question';
@@ -16,12 +17,21 @@ type RoomParams = {
 }
 
 export function Room() {
-  const { user } = useAuth();
   const params = useParams<RoomParams>();
+  const { user, signInWithGoogle } = useAuth();
+  const history = useHistory();
   const [newQuestion, setNewQuestion] = useState('');
   const roomId = params.id;
 
   const { title, questions, endedAt } = useRoom(roomId);
+
+  async function handleCreateRoom() {
+    if (!user) {
+      await signInWithGoogle();
+    }
+
+    history.push('/rooms/new');
+  }
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault();
@@ -50,12 +60,16 @@ export function Room() {
   }
 
   async function handleLikeQuestion(questionId: string, likeId: string | undefined) {
-    if (likeId) {
-      await database.ref(`rooms/${roomId}/questions/${questionId}/likes/${likeId}`).remove();
+    if (user) {
+      if (likeId) {
+        await database.ref(`rooms/${roomId}/questions/${questionId}/likes/${likeId}`).remove();
+      } else {
+        await database.ref(`rooms/${roomId}/questions/${questionId}/likes`).push({
+          authorId: user?.id,
+        })
+      }
     } else {
-      await database.ref(`rooms/${roomId}/questions/${questionId}/likes`).push({
-        authorId: user?.id,
-      })
+      alert("Faça seu login para interagir!")
     }
   }
 
@@ -72,10 +86,8 @@ export function Room() {
       <main>
         <div className="room-title">
           <h1>Sala {title}</h1>
-          {!endedAt ?
-            questions.length > 0 && <span>{questions.length} pergunta(s)</span> :
-            <span>Encerrada</span>
-          }
+          {endedAt && <span>Encerrada</span>}
+          <span>{questions.length} pergunta(s)</span>
         </div>
 
         {!endedAt &&
@@ -88,13 +100,19 @@ export function Room() {
 
             <div className="form-footer">
               {user ? (
-                <div className="user-info">
-                  <img src={user.avatar} alt={user.name} />
-                  <span>{user.name}</span>
-                </div>
+                <>
+                  <div className="user-info">
+                    <img src={user.avatar} alt={user.name} />
+                    <span>{user.name}</span>
+                  </div>
+                </>
               ) : (
-                <span>Para enviar perguntas, <button>faça seu login</button>.</span>
+                <button onClick={handleCreateRoom} className="create-room">
+                  <img src={googleIconImg} alt="Google" />
+                  Faça seu login para interagir
+                </button>
               )}
+
               <Button type="submit" disabled={!user}>Enviar pergunta</Button>
             </div>
           </form>
