@@ -32,13 +32,24 @@ export function Home() {
     }
 
     const roomRef = await database.ref(`rooms/${roomCode}`).get();
+    const isAdmin = user?.id === roomRef.val().authorId;
 
     if (!roomRef.exists()) {
       alert('Room does not exists.');
       return;
     }
 
-    history.push(`/rooms/${roomCode}`);
+    if (roomRef.val().endedAt && !isAdmin) {
+      alert('Room already closed.');
+      return;
+    }
+
+    if (isAdmin) {
+      history.push(`/admin/rooms/${roomCode}`);
+    }
+    else {
+      history.push(`/rooms/${roomCode}`);
+    }
   }
 
   return (

@@ -9,6 +9,8 @@
 
   display: flex;
 
+  transition: filter 0.2s;
+
   div {
     height: 100%;
     background: #835afd;
@@ -26,5 +28,9 @@
     width: 190px;
     font-size: 14px;
     font-weight: 500;
+  }
+
+  &:hover{
+    filter: brightness(0.9);
   }
 }
