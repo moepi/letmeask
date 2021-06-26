@@ -31,7 +31,7 @@ You can view the project layout through [this link](https://www.figma.com/file/u
 - Clone the repository `git clone https://github.com/rafaelthz/letmeask-nlw6.git`
 - Access the folder `cd letmeask-nlw6`
 - Install the dependencies with `yarn`
-- Create a .env.local file and add the yours Firebase SDK configs - see more on the [docs](https://firebase.google.com/docs)
+- Create a `.env.local` file and add the yours Firebase SDK configs - see more on the [docs](https://firebase.google.com/docs)
 - Start the server with `yarn start`
 
 Now you can access [`localhost:3000`](http://localhost:3000) in your browser.
@@ -39,4 +39,4 @@ Remembering that it will be necessary to create an account in Firebase and a pro
 
 ---
 
-Inspired by [Rocketseat Education](https://github.com/rocketseat-education/nlw-05-reactjs).
+Inspired by [Rocketseat Education](https://github.com/rocketseat-education/nlw-06-reactjs).
