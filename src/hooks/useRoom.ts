@@ -34,6 +34,7 @@ export function useRoom(roomId: string) {
   const history = useHistory();
   const [questions, setQuestions] = useState<QuestionType[]>([]);
   const [title, setTitle] = useState('');
+  const [authorId, setAuthorId] = useState('');
   const [endedAt, setEndedAt] = useState('');
 
   useEffect(() => {
@@ -44,6 +45,8 @@ export function useRoom(roomId: string) {
 
       if (databaseRoom.authorId !== user?.id) {
         history.push(`/rooms/${roomId}`);
+      } else {
+        history.push(`/admin/rooms/${roomId}`);
       }
 
       const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
@@ -59,8 +62,13 @@ export function useRoom(roomId: string) {
         }
       });
 
+      parsedQuestions.sort(function (a, b) {
+        return (b.likeCount) - (a.likeCount);
+      })
+
       setTitle(databaseRoom.title);
       setEndedAt(databaseRoom.endedAt);
+      setAuthorId(databaseRoom.authorId);
       setQuestions(parsedQuestions);
     });
 
@@ -69,5 +77,5 @@ export function useRoom(roomId: string) {
     }
   }, [roomId, user?.id, history]);
 
-  return { questions, title, endedAt }
+  return { questions, title, endedAt, authorId }
 }

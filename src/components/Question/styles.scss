@@ -65,6 +65,18 @@
       gap: 10px;
     }
 
+    .likes {
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 8px;
+      gap: 4px;
+
+      span {
+        color: #737380;
+        font-size: 16px;
+      }
+    }
+
     button {
       border: 0;
       background: transparent;

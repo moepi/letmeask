@@ -4,7 +4,7 @@
   height: 100vh;
 
   aside{
-    flex: 7;
+    flex: 1;
 
     background: #835AFD;
     color: #fff;
@@ -25,7 +25,7 @@
       margin-top: 16px;
     }
 
-    p{
+    p {
       font-size: 24px;
       line-height: 32px;
       margin-top: 16px;
@@ -34,7 +34,7 @@
   }
 
   main {
-    flex: 8;
+    flex: 3;
 
     padding: 0 32px;
 
@@ -53,12 +53,32 @@
 
     > img {
       align-self: center;
+      margin-bottom: 40px;
     }
 
-    h2{
+    h2 {
       font-size: 24px;
-      margin: 64px 0 24px;
+      margin: 0 0 24px;
       font-family: 'Poppins', sans-serif;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin: 0 0 16px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .list-rooms {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+      height: 50vh;
+      overflow-x: hidden;
+
+      & + button {
+        margin-top: 8px; 
+      }
     }
 
     form {
@@ -77,6 +97,10 @@
       button, input {
         width: 100%;
       }
+
+      & + button {
+        margin-top: 16px;
+      }
     }
 
     p{
@@ -87,11 +111,24 @@
       a{
         color: #e559f9;
       }
+
+      button{
+        color: #e559f9;
+        font-size: 14px;
+        border: 0;
+        background: transparent;
+    
+        cursor: pointer;
+        transition: filter 0.2s;
+    
+        &:hover {
+          filter: brightness(0.5);
+        }
+      }
     }
   }
 
   .create-room{
-    margin-top: 64px;
     height: 50px;
     border-radius: 8px;
     font-weight: 500;

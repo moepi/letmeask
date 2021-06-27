@@ -1,4 +1,6 @@
 #page-room {
+  padding-bottom: 24px; 
+  
   header {
     padding: 24px;
     border-bottom: 1px solid #e2e2e2;
@@ -104,7 +106,7 @@ main {
         }
       }
 
-      .create-room{
+      .login-room{
         height: 50px;
         border-radius: 8px;
         font-weight: 500;

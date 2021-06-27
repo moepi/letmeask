@@ -1,12 +1,10 @@
-import { Link, useHistory, useParams } from 'react-router-dom';
-import logoImg from '../assets/images/logo.svg';
+import { useParams } from 'react-router-dom';
 import googleIconImg from '../assets/images/google-icon.svg';
 import { Button } from '../components/Button';
-import { RoomCode } from '../components/RoomCode';
 import { Question } from '../components/Question';
+import { Header } from '../components/Header';
 
 import '../styles/room.scss';
-import '../styles/button.scss';
 import { FormEvent, useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { database } from '../services/firebase';
@@ -19,18 +17,15 @@ type RoomParams = {
 export function Room() {
   const params = useParams<RoomParams>();
   const { user, signInWithGoogle } = useAuth();
-  const history = useHistory();
   const [newQuestion, setNewQuestion] = useState('');
   const roomId = params.id;
 
-  const { title, questions, endedAt } = useRoom(roomId);
+  const { title, questions, endedAt, authorId } = useRoom(roomId);
 
-  async function handleCreateRoom() {
+  async function handleLoginRoom() {
     if (!user) {
       await signInWithGoogle();
     }
-
-    history.push('/rooms/new');
   }
 
   async function handleSendQuestion(event: FormEvent) {
@@ -75,14 +70,11 @@ export function Room() {
 
   return (
     <div id="page-room">
-      <header>
-        <div className="content">
-          <Link to="/">
-            <img id="logo" src={logoImg} alt="Letmeask" />
-          </Link>
-          <RoomCode code={roomId} />
-        </div>
-      </header>
+      <Header
+        roomId={roomId}
+        isAdmin={user?.id === authorId}
+        endedAt={endedAt}
+      />
       <main>
         <div className="room-title">
           <h1>Sala {title}</h1>
@@ -107,7 +99,7 @@ export function Room() {
                   </div>
                 </>
               ) : (
-                <button onClick={handleCreateRoom} className="create-room">
+                <button onClick={handleLoginRoom} className="login-room">
                   <img src={googleIconImg} alt="Google" />
                   Faça seu login para interagir
                 </button>
@@ -132,7 +124,7 @@ export function Room() {
                   <button
                     className={`like-button ${question.likeId ? 'liked' : ''}`}
                     type="button"
-                    aria-label="Marcar como gostei"
+                    aria-label={`${question.likeId ? 'Desmarcar como gostei' : 'Marcar como gostei'}`}
                     onClick={() => handleLikeQuestion(question.id, question.likeId)}
                   >
                     {question.likeCount > 0 && <span>{question.likeCount}</span>}

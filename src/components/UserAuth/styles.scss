@@ -1,0 +1,30 @@
+#user-auth {
+  position: absolute;
+  top: 0vh;
+  right: 0vw;
+  padding: 10px;
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #737380;
+    font-size: 14px;
+    border: 0;
+    background: transparent;
+
+    cursor: pointer;
+    transition: filter 0.2s;
+
+    &:hover {
+      filter: brightness(0.5);
+    }
+
+    img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+  }
+}
