@@ -43,33 +43,37 @@ export function useRoom(roomId: string) {
     roomRef.on('value', room => {
       const databaseRoom = room.val();
 
-      if (databaseRoom.authorId !== user?.id) {
-        history.push(`/rooms/${roomId}`);
-      } else {
-        history.push(`/admin/rooms/${roomId}`);
-      }
-
-      const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
-      const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
-        return {
-          id: key,
-          content: value.content,
-          author: value.author,
-          isHighlighted: value.isHighlighted,
-          isAnswered: value.isAnswered,
-          likeCount: Object.values(value.likes ?? {}).length,
-          likeId: Object.entries(value.likes ?? {}).find(([key, like]) => like.authorId === user?.id)?.[0]
+      if (databaseRoom !== null) {
+        if (databaseRoom.authorId !== user?.id) {
+          history.replace(`/rooms/${roomId}`);
+        } else {
+          history.replace(`/admin/rooms/${roomId}`);
         }
-      });
 
-      parsedQuestions.sort(function (a, b) {
-        return (b.likeCount) - (a.likeCount);
-      })
+        const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
+        const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
+          return {
+            id: key,
+            content: value.content,
+            author: value.author,
+            isHighlighted: value.isHighlighted,
+            isAnswered: value.isAnswered,
+            likeCount: Object.values(value.likes ?? {}).length,
+            likeId: Object.entries(value.likes ?? {}).find(([key, like]) => like.authorId === user?.id)?.[0]
+          }
+        });
 
-      setTitle(databaseRoom.title);
-      setEndedAt(databaseRoom.endedAt);
-      setAuthorId(databaseRoom.authorId);
-      setQuestions(parsedQuestions);
+        parsedQuestions.sort(function (a, b) {
+          return (b.likeCount) - (a.likeCount);
+        })
+
+        setTitle(databaseRoom.title);
+        setEndedAt(databaseRoom.endedAt);
+        setAuthorId(databaseRoom.authorId);
+        setQuestions(parsedQuestions);
+      } else {
+        history.replace('/');
+      }
     });
 
     return () => {

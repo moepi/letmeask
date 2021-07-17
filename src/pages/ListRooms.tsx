@@ -112,7 +112,7 @@ export function ListRooms() {
           >
             Criar nova sala
           </Button>
-          <p>Quer entrar em outra sala? <Link to="/">Voltar</Link></p>
+          <p>Entrar com código da sala? <Link to="/">Voltar</Link></p>
         </div>
       </main>
     </div>

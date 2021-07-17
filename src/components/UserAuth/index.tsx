@@ -6,10 +6,10 @@ export function UserAuth() {
 
   return (
     <div id="user-auth">
-      { user && (
-        <button type="button" onClick={signOutGoogle}>
+      {user && (
+        <button type="button" onClick={signOutGoogle} title={user?.email}>
           Logout
-          <img src={user?.avatar} alt={user?.name} title={user?.email} />
+          <img src={user?.avatar} alt={user?.name} />
         </button>
       )}
     </div>

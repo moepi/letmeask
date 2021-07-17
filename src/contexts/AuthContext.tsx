@@ -1,5 +1,4 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
-import { useHistory } from 'react-router-dom';
 import { auth, firebase } from "../services/firebase";
 
 type AuthContextType = {
@@ -23,7 +22,6 @@ export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthContextProvider(props: AuthContextProviderProps) {
   const [user, setUser] = useState<User>();
-  const history = useHistory();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
@@ -71,7 +69,7 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
   function signOutGoogle() {
     auth.signOut();
     setUser(undefined);
-    history.push('/');
+    return;
   }
 
   return (
