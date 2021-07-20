@@ -22,6 +22,7 @@ This project was developed using the following technologies:
 - [TypeScript](https://www.typescriptlang.org/)
 - [Firebase](https://firebase.google.com/)
 - [SASS](https://sass-lang.com/install)
+- [React Toastify](https://fkhadra.github.io/react-toastify/introduction/)
 
 ## Layout
 
