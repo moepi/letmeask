@@ -8,9 +8,9 @@
 
 ## Project
 
-Letmeask is a web application to create Q&A rooms with ranked questions to help streamers. The project was developed during [Next Level Week #06 Together](https://nextlevelweek.com/) (ReactJS), event presented by [Rocketseat](https://rocketseat.com.br/).
+Letmeask is a web application to create interactive Q&A rooms to help streamers/content creators. The project was developed during [Next Level Week #06 Together](https://nextlevelweek.com/) (ReactJS), event presented by [Rocketseat](https://rocketseat.com.br/).
 
-To complement the project I developed: toast notifications, logout flow, room reopen flow, listing of user rooms, permission rules for accessing links and interaction rules with the room.
+To complement the project I developed: toast notifications, logout flow, room reopen flow, listing of user rooms, permission rules for accessing links, interaction rules with the room and others fixes.
 
 <br>
 
